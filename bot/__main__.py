@@ -9,8 +9,8 @@ from sqlalchemy.orm import sessionmaker
 
 from bot.config_loader import Config, load_config
 from bot.db.base import Base
-from bot.handlers.commands import register_commands
 from bot.handlers.callbacks import register_callbacks
+from bot.handlers.commands import register_commands
 from bot.updatesworker import get_handled_updates_list
 
 
@@ -44,6 +44,7 @@ async def main():
     )
     bot = Bot(config.bot.token, parse_mode="HTML")
     bot["db"] = async_sessionmaker
+    bot["admin_id"] = config.settings.admin_id
     dp = Dispatcher(bot)
 
     register_commands(dp)

@@ -1,7 +1,7 @@
 version: '3.8'
 services:
     bot:
-        image: groosha/aiogram-and-sqlalchemy-demo:latest
+        image: apbazn/fastengbot:latest
         restart: always
         stop_signal: SIGINT
         environment:

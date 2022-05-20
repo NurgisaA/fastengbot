@@ -1,8 +1,8 @@
 # rename this file to .env (with the leading dot) and place it next to docker-compose.yml
-BOT_TOKEN=5171513297:AAE2WJFpO03lTCw16HjxUJ4Ez6vepHR5BNg
+BOT_TOKEN=123456789:AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQq
 DB_HOST=db
-DB_NAME=fasteng
-DB_USER=postgres
-DB_PASS=postgres
+DB_NAME=demo
+DB_USER=someuser
+DB_PASS=Y0ur$upeRS3cReTpA$$w0rd
 PGADMIN_USER=admin@admin.com
 PGADMIN_PASSWORD=4RIDDLE7MISCHANCE4opaqueness1

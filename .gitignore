@@ -1,4 +1,6 @@
-venv/
-.idea/
+/venv
+/.idea
 /docker-compose.yml
 /.env
+/postgres_admin
+/postgres_data
