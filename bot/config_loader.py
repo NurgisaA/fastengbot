@@ -17,7 +17,7 @@ class DB:
 
 @dataclass
 class Settings:
-    admin_id: str
+    admin_id: list[int]
 
 
 @dataclass
@@ -29,6 +29,12 @@ class Config:
 
 def load_config():
     # TODO: Add some checks here?
+    admins_id = []
+    if getenv("ADMIN_ID"):
+        admins_id = getenv("ADMIN_ID").split(',')
+
+    admins_id = [int(item) for item in admins_id]
+
     return Config(
         bot=Bot(token=getenv("BOT_TOKEN")),
 
@@ -38,5 +44,8 @@ def load_config():
             user=getenv("DB_USER"),
             password=getenv("DB_PASS")
         ),
-        settings=Settings(admin_id=getenv("ADMIN_ID")),
+
+        settings=Settings(
+            admin_id=admins_id
+        ),
     )

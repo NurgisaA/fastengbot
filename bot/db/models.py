@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, BigInteger, ForeignKey, String, Table
+from sqlalchemy import Column, Integer, BigInteger, ForeignKey, String
 from sqlalchemy.orm import relationship
 
 from bot.db.base import Base
@@ -41,36 +41,21 @@ class User(Base):
 
 class Tag(Base):
     __tablename__ = 'tag'
-
-    dict = relationship("Dict", backref="tag")
     id = Column(Integer, primary_key=True)
+    word = relationship("Word", backref="tag")
     label = Column(String)
-
-
-dict_association_table = Table('dict_words', Base.metadata,
-                               Column('dict_id', ForeignKey('dict.id')),
-                               Column('word_id', ForeignKey('word.id'))
-                               )
-
-
-class Dict(Base):
-    __tablename__ = "dict"
-
-    id = Column(BigInteger, primary_key=True, unique=True, autoincrement=False)
-    en_id = Column(Integer, ForeignKey('word.id'))
-    words = relationship("Word",
-                         secondary=dict_association_table)
-    image_id = Column(BigInteger, unique=True, autoincrement=False)
-    tag_id = Column(Integer, ForeignKey('tag.id'))
 
 
 class Word(Base):
     __tablename__ = "word"
-    id = Column(BigInteger, primary_key=True, unique=True, autoincrement=False)
-    lang_id = Column(Integer, ForeignKey('lang.id'))
+    id = Column(BigInteger, primary_key=True, unique=True, autoincrement=True)
+    translate_id = Column(Integer, ForeignKey('lang.id'))
     original = Column(String)
     transcription = Column(String)
-    audio_id = Column(BigInteger, unique=True, autoincrement=False)
+    translate = Column(String)
+    audio_id = Column(BigInteger, unique=True, autoincrement=False, nullable=True)
+    image_id = Column(BigInteger, unique=True, autoincrement=False, nullable=True)
+    tag_id = Column(Integer, ForeignKey('tag.id'))
     # * Английский вариант
     # * Транскрипция
     # * Русский

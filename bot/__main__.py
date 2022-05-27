@@ -16,8 +16,8 @@ from bot.updatesworker import get_handled_updates_list
 
 async def set_bot_commands(bot: Bot):
     commands = [
-        BotCommand(command="play", description="Start a new game (your current score will reset)"),
-        BotCommand(command="top", description="View top-5 players scoreboard")
+        BotCommand(command="get", description="get card"),
+        # BotCommand(command="top", description="View top-5 players scoreboard")
     ]
     await bot.set_my_commands(commands, scope=BotCommandScopeDefault())
 
@@ -45,6 +45,7 @@ async def main():
     bot = Bot(config.bot.token, parse_mode="HTML")
     bot["db"] = async_sessionmaker
     bot["admin_id"] = config.settings.admin_id
+
     dp = Dispatcher(bot)
 
     register_commands(dp)

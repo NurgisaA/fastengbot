@@ -12,4 +12,5 @@ COPY --from=compile-image /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 WORKDIR /app
 COPY bot /app/bot
+COPY bot/datastore /app/datastore
 CMD ["python", "-m", "bot"]

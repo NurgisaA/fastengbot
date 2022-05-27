@@ -2,7 +2,7 @@ from random import randint
 
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from bot.common import cb_balls
+from bot.common import cb_balls, answer_question, w_card
 
 
 def generate_balls() -> InlineKeyboardMarkup:
@@ -21,18 +21,35 @@ def generate_balls() -> InlineKeyboardMarkup:
     return kb
 
 
-def generate_question() -> InlineKeyboardMarkup:
-    kb = InlineKeyboardMarkup(row_width=4)
+def generate_question(words, true_answer) -> InlineKeyboardMarkup:
+    kb = InlineKeyboardMarkup(row_width=1)
+
     buttons = [
         InlineKeyboardButton(
-            text=str(item),
-            callback_data='false'
-        ) for item in range(3)
+            text=str(item.translate),
+            callback_data=answer_question.new(
+                answer_id=true_answer.id,
+                correct='1' if true_answer.translate == item.translate else '0'
+            )
+        ) for item in words
     ]
-    buttons.insert(randint(0, 3),
-                   InlineKeyboardButton(
-                       text='true',
-                       callback_data='true'
-                   ))
+
+    kb.add(*buttons)
+    return kb
+
+
+def switch_word(word, into) -> InlineKeyboardMarkup:
+    kb = InlineKeyboardMarkup(row_width=1)
+
+    buttons = [
+        InlineKeyboardButton(
+            text='🔄',
+            callback_data=w_card.new(
+                answer_id=word.id,
+                into=into
+            )
+        )
+    ]
+
     kb.add(*buttons)
     return kb
