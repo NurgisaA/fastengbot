@@ -46,7 +46,16 @@ def switch_word(word, into) -> InlineKeyboardMarkup:
             text='🔄',
             callback_data=w_card.new(
                 answer_id=word.id,
-                into=into
+                into=into,
+                type='switch',
+            )
+        ),
+        InlineKeyboardButton(
+            text='>>>',
+            callback_data=w_card.new(
+                answer_id=word.id,
+                into=into,
+                type='next_card',
             )
         )
     ]

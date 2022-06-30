@@ -12,3 +12,4 @@ async def get_or_create(session, model, **kwargs):
             await s.merge(instance)
             await s.commit()
             return instance
+

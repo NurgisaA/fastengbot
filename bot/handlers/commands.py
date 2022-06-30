@@ -23,22 +23,7 @@ async def cmd_install(message: types.Message):
     await get_or_create(db_session, Lang, name='English', code='en')
     ru_lang = await get_or_create(db_session, Lang, name='Русский', code='ru')
     tag = await get_or_create(db_session, Tag, label='base')
-    await get_or_create(
-        db_session,
-        Word,
-        translate_id=ru_lang.id,
-        tag_id=tag.id,
-        original='turn',
-        transcription='[tɜːn]',
-        translate='поворачивать')
-    await get_or_create(
-        db_session,
-        Word,
-        translate_id=ru_lang.id,
-        tag_id=tag.id,
-        original='incorporate',
-        transcription='[ɪnˈkɔːpəreɪt]',
-        translate='включать (в себя что-то), объединяться')
+
     await message.answer("ok!")
 
 
@@ -68,7 +53,11 @@ async def cmd_play(message: types.Message):
 
 async def cmd_read_xlsx1(message: types.Message):
     db_session = message.bot.get("db")
+    admin_id = message.bot.get("admin_id")
+    current_id = message.from_user.id
 
+    if current_id not in admin_id:
+        return
     workbook = load_workbook('./datastore/data.xlsx')
     worksheets = workbook.get_sheet_names()
 
@@ -91,7 +80,11 @@ async def cmd_read_xlsx1(message: types.Message):
 
 async def cmd_read_xlsx2(message: types.Message):
     db_session = message.bot.get("db")
+    admin_id = message.bot.get("admin_id")
+    current_id = message.from_user.id
 
+    if current_id not in admin_id:
+        return
     workbook = load_workbook('./datastore/data.xlsx')
     worksheets = workbook.get_sheet_names()
 

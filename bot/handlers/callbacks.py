@@ -1,4 +1,4 @@
-from contextlib import suppress
+
 
 from contextlib import suppress
 
@@ -8,6 +8,7 @@ from sqlalchemy import select
 
 from bot.common import answer_question, w_card
 from bot.db.models import PlayerScore, Word
+from bot.handlers.commands import get_card
 from bot.keyboards import generate_balls, switch_word
 
 
@@ -73,6 +74,7 @@ async def incorrect_answer(call: types.CallbackQuery):
 
     :param call:CallbackQuery from Telegram
     """
+
     db_session = call.bot.get("db")
 
     data = call.data.split(':')
@@ -115,10 +117,16 @@ async def switch_card(call: types.CallbackQuery):
     await call.answer()
 
 
+async def get_next_card(call: types.CallbackQuery):
+    await get_card(call.message)
+
+
 def register_callbacks(dp: Dispatcher):
     # dp.register_callback_query_handler(miss, cb_balls.filter(color="red"))
     # dp.register_callback_query_handler(hit, cb_balls.filter(color="green"))
     dp.register_callback_query_handler(incorrect_answer, answer_question.filter(correct="0"))
     dp.register_callback_query_handler(correct_answer, answer_question.filter(correct="1"))
-    dp.register_callback_query_handler(switch_card, w_card.filter(into="ru"))
-    dp.register_callback_query_handler(switch_card, w_card.filter(into="en"))
+    dp.register_callback_query_handler(switch_card, w_card.filter(into="ru", type='switch'))
+    dp.register_callback_query_handler(switch_card, w_card.filter(into="en", type='switch'))
+    dp.register_callback_query_handler(get_next_card, w_card.filter(type='next_card'))
+    dp.register_callback_query_handler(get_next_card, w_card.filter(type='next_card'))

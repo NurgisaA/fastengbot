@@ -21,8 +21,16 @@ class Settings:
 
 
 @dataclass
+class WebhookConfigs:
+    app_url: str
+    webhook_path: str
+    webhook_url: str
+
+
+@dataclass
 class Config:
     bot: Bot
+    webhook: WebhookConfigs
     db: DB
     settings: Settings
 
@@ -34,10 +42,16 @@ def load_config():
         admins_id = getenv("ADMIN_ID").split(',')
 
     admins_id = [int(item) for item in admins_id]
-
+    bot_token = getenv("BOT_TOKEN")
+    webhook_path = f"/bot/{bot_token}"
+    app_url = "https://<your-host>"
     return Config(
-        bot=Bot(token=getenv("BOT_TOKEN")),
-
+        bot=Bot(token=bot_token),
+        webhook=WebhookConfigs(
+            app_url=app_url,
+            webhook_path=webhook_path,
+            webhook_url=app_url + webhook_path
+        ),
         db=DB(
             host=getenv("DB_HOST"),
             db_name=getenv("DB_NAME"),

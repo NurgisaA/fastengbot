@@ -2,6 +2,7 @@ import asyncio
 import logging
 
 from aiogram import Bot, Dispatcher
+from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram.types import BotCommand
 from aiogram.types.bot_command_scope import BotCommandScopeDefault
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
@@ -29,7 +30,7 @@ async def main():
     )
 
     config: Config = load_config()
-
+    print(config.webhook.webhook_path)
     engine = create_async_engine(
         f"postgresql+asyncpg://{config.db.user}:{config.db.password}@{config.db.host}/{config.db.db_name}",
         future=True
@@ -47,7 +48,7 @@ async def main():
     bot["admin_id"] = config.settings.admin_id
 
     dp = Dispatcher(bot)
-
+    dp.middleware.setup(LoggingMiddleware())
     register_commands(dp)
     register_callbacks(dp)
 
