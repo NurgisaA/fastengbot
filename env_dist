@@ -1,10 +1,13 @@
 # rename this file to .env (with the leading dot) and place it next to docker-compose.yml
-BOT_TOKEN=123456789:AAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+BOT_TOKEN=5155672685:AAE5uGXTZgNrsy7oGCqD8ij92D8kLqCEnCg
 DB_HOST=db
 DB_NAME=fasteng
 DB_USER=postgres
 DB_PASS=postgres
-ADMIN_ID=1111111111,2222222222,3333333333
-PGADMIN_USER=admin@admin.com
-PGADMIN_PASSWORD=4RIDDLE7MISCHANCE4opaqueness1
+ADMIN_ID=1304264311
 DEBUG=1
+WEBHOOK_DOMAIN="https://bot.lowless.tk"
+
+APP_HOST=bot2
+APP_PORT=3000
+PROJECT_TAG=ytbot

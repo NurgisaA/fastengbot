@@ -26,7 +26,6 @@ async def cmd_install(message: types.Message):
 
     await message.answer("ok!")
 
-
 async def cmd_start(message: types.Message):
     await message.answer("Hello!")
     db_session = message.bot.get("db")

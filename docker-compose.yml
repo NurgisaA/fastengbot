@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+    bot2:
+        container_name: bot2
+        build: .
+        restart: unless-stopped
+        stop_signal: SIGINT
+        env_file:
+            - .env
+        networks:
+            - nginx_app-network
+
+networks:
+  nginx_app-network:
+    external: true
